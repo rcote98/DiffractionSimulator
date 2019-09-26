@@ -8,6 +8,9 @@ Small script designed for my Photonics course, simulates plain wave propagation 
 ## Usage
 
 Just run the script in the terminal using:
+  ```bash
+  python3 diffraction.py
+ ```
 
 ## Examples
 
