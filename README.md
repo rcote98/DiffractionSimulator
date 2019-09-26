@@ -11,6 +11,7 @@ Just run the script in the terminal using:
   ```bash
   python3 diffraction.py
  ```
+and follow the script's instructions.
 
 ## Examples
 
