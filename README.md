@@ -16,9 +16,9 @@ and follow the script's instructions.
 ## Examples
 
 <p align="center"> 
-<img src="example1.png">
+<img src="examples/example1.png">
 </p>
 
 <p align="center"> 
-<img src="example2.png">
+<img src="examples/example2.png">
 </p>

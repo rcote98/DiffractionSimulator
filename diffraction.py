@@ -1,12 +1,13 @@
 #!/usr/bin/python3
 
 import matplotlib.pyplot as plt
+from PIL import Image
 import numpy as np
 
 N = 1000 # number of points
 
 global zoom
-zoom = 1/5 #zoom in the diffraction graphs
+zoom = 1/4 #zoom in the diffraction graphs
 
 # DEFAULT VALUES
 global SIDE
@@ -19,6 +20,8 @@ global LDA
 LDA = 600e-9 # wavelength, in m
 global Z
 Z = 100 # obstacle-sensor distance, in cm
+global FNAME
+FNAME = "atom.png"
 
 #############################################
 ## GENERACIÓN DE SUPERFICIES DE DIFRACCIÓN ##
@@ -130,6 +133,7 @@ def menu():
     print("First, select the shape of the obstacle: (default: Circle)")
     print("[0] - Circle")
     print("[1] - Square") 
+    print("[2] - Image")
 
     choice = input("-> ")
     print("")
@@ -175,6 +179,7 @@ def menu():
 
         print("DONE!")
         plot_stuff(obs, diff)
+        quit()
 
 
 
@@ -212,7 +217,51 @@ def menu():
 
         print("DONE!")
         plot_stuff(obs, diff)
+        quit()
 
+    if choice == "2":
+
+        print("Please, now input the following information:\n")
+
+        global FNAME
+        rply = input_def("Image file name: (default: "+ FNAME +", image must be " 
+            + str(N) + "x" + str(N) + " pixels)", FNAME)
+        FNAME = rply
+
+        try:
+            obs = np.array(Image.open(rply).convert("L"))
+        except FileNotFoundError:
+            print("\n File does not exist, quitting.")
+            quit()
+        except OSError:
+            print("\n File type not recognized, quitting.")
+            quit()
+
+        rply = input_def("Obstacle/sensor area side: (default: "+str(SIDE)+"cm)", SIDE)
+        SIDE = int(rply)
+
+        rply = input_def("Obstacle-sensor separaton in cm: (default: "+str(Z)+"cm)", Z)
+        Z = float(rply)
+
+        rply = input_def("Light wavelength in m: (default: "+str(LDA)+"m)", LDA)
+        LDA = float(rply)
+
+        print("Finally, choose the diffraction method: (default: Fresnel's)")
+        print("[0] - Fresnel")
+        print("[1] - Fraunhoffer")
+        method = input("-> ")
+        print("")
+
+        if(method == "1"):
+            print("Using Fraunhoffer's approximation...")
+            diff = fraunhoffer(obs)
+        else:
+            print("Using Fresnel's approximation...")
+            diff = fresnel(obs)
+
+        print("DONE!")
+        plot_stuff(obs, diff)
+        quit()
 
     else:
 
@@ -236,6 +285,7 @@ def input_def(ph, def_val):
 def plot_stuff(obstacle, difracted):
 
     plt.figure(figsize=(900, 400))
+    factor = 1/(LDA*1000*Z*10)
 
     plt.suptitle("separation = " + str(int(Z)) + "cm\n\nwavelength = " + str(LDA) + "m", fontsize = 20)
 
@@ -248,14 +298,14 @@ def plot_stuff(obstacle, difracted):
     plt.subplot(1,3,2)
     plt.title("Diffraction Pattern", fontsize=16)
     plt.imshow(difracted[int(N/2-N*zoom/2):int(N/2+N*zoom/2)-1,int(N/2-N*zoom/2):int(N/2+N*zoom/2)-1],
-    cmap="gray", extent=[-SIDE*5*zoom,SIDE*5*zoom,-SIDE*5*zoom, SIDE*5*zoom])
+    cmap="gray", extent=[factor*(-SIDE*5*zoom),factor*(SIDE*5*zoom),factor*(-SIDE*5*zoom),factor*(SIDE*5*zoom)])
     plt.xlabel("y/mm")
     plt.ylabel("x/mm")
 
     plt.subplot(1,3,3)
     plt.title("Diffraction Pattern (log)", fontsize=16)
     plt.imshow(np.log(difracted[int(N/2-N*zoom/2):int(N/2+N*zoom/2)-1,int(N/2-N*zoom/2):int(N/2+N*zoom/2)-1]),
-    cmap="gray", extent=[-SIDE*5*zoom,SIDE*5*zoom,-SIDE*5*zoom, SIDE*5*zoom])
+    cmap="gray", extent=[factor*(-SIDE*5*zoom),factor*(SIDE*5*zoom),factor*(-SIDE*5*zoom),factor*(SIDE*5*zoom)])
     plt.xlabel("y/mm")
     plt.ylabel("x/mm")
 
