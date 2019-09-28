@@ -15,6 +15,8 @@ and follow the script's instructions.
 
 ## Example Output
 
+These are slightly outdated, but you will still get similar results:
+
 <p align="center"> 
 <img src="examples/example1.png">
 </p>
