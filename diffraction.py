@@ -21,7 +21,7 @@ LDA = 600e-9 # wavelength, in m
 global Z
 Z = 100 # obstacle-sensor distance, in cm
 global FNAME
-FNAME = "atom.png"
+FNAME = "img/atom.png"
 
 #############################################
 ## GENERACIÓN DE SUPERFICIES DE DIFRACCIÓN ##
@@ -287,27 +287,27 @@ def plot_stuff(obstacle, difracted):
     plt.figure(figsize=(900, 400))
     factor = 1/(LDA*1000*Z*10)
 
-    plt.suptitle("separation = " + str(int(Z)) + "cm\n\nwavelength = " + str(LDA) + "m", fontsize = 20)
+    plt.suptitle(r"$z$ = " + str(int(Z)) + "cm\n\n" + r"$\lambda$ = " + str(LDA) + "m", fontsize = 20)
 
     plt.subplot(1,3,1)
     plt.title("Obstacle", fontsize=16)
     plt.imshow(obstacle, cmap="gray", extent=[-SIDE*5,SIDE*5,-SIDE*5, SIDE*5])
-    plt.xlabel("y/mm")
-    plt.ylabel("x/mm")
+    plt.xlabel("y/mm", fontsize=14)
+    plt.ylabel("x/mm", fontsize=14)
 
     plt.subplot(1,3,2)
     plt.title("Diffraction Pattern", fontsize=16)
     plt.imshow(difracted[int(N/2-N*zoom/2):int(N/2+N*zoom/2)-1,int(N/2-N*zoom/2):int(N/2+N*zoom/2)-1],
     cmap="gray", extent=[factor*(-SIDE*5*zoom),factor*(SIDE*5*zoom),factor*(-SIDE*5*zoom),factor*(SIDE*5*zoom)])
-    plt.xlabel("y/mm")
-    plt.ylabel("x/mm")
+    plt.xlabel("y/mm", fontsize=14)
+    plt.ylabel("x/mm", fontsize=14)
 
     plt.subplot(1,3,3)
     plt.title("Diffraction Pattern (log)", fontsize=16)
     plt.imshow(np.log(difracted[int(N/2-N*zoom/2):int(N/2+N*zoom/2)-1,int(N/2-N*zoom/2):int(N/2+N*zoom/2)-1]),
     cmap="gray", extent=[factor*(-SIDE*5*zoom),factor*(SIDE*5*zoom),factor*(-SIDE*5*zoom),factor*(SIDE*5*zoom)])
-    plt.xlabel("y/mm")
-    plt.ylabel("x/mm")
+    plt.xlabel("y/mm", fontsize=14)
+    plt.ylabel("x/mm", fontsize=14)
 
     plt.show()
 
