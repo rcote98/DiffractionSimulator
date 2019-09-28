@@ -13,7 +13,7 @@ Just run the script in the terminal using:
  ```
 and follow the script's instructions.
 
-## Examples
+## Example Output
 
 <p align="center"> 
 <img src="examples/example1.png">
