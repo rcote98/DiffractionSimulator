@@ -1,5 +1,5 @@
 # Diffraction Simulator
-Small script designed for my Photonics course, simulates plain wave propagation in Python using either Fresnel's or Fraunhoffer's approximation. 
+Basic script for my Photonics course. Simulates plain wave propagation in Python using either Fresnel's or Fraunhoffer's approximation. 
 
 ## Requirements
 
